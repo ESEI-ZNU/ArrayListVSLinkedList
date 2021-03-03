@@ -1,102 +1,147 @@
 #include "pch.h"
+#include "ArrayList.h"
+
+#include <string>
 #include <iostream>
+#include <sstream>
+#include <cstdlib>
+#include <stdexcept>
 
 using namespace std;
 
-//Dev 1
+const int minimumArraySize = 2;
 
-template<typename T>
-class ArrayList
-{
-	T _items[];
-	
-	public:           
-		ArrayList() {
-			return this(0);
-		}
+//constructor
+//set array count, count and data
+template<class T>
+ArrayList<T>::ArrayList() {
+	arraySize = minimumArraySize;
+	count = 0;
+	data = new T[arraySize];
+}
 
-	public:
-		ArrayList(int length)
-		{
-		if (length < 0)
-		{
-			//throw new ArgumentException("length");
-		}
-
-		_items = new T[length];
-		}
-
-	/* 
-	public int IndexOf(T item)
+//constructor with length
+//set array count, count and data
+template<class T>
+ArrayList<T>::ArrayList(int length) {
+	if (length < 0)
 	{
-		throw new NotImplementedException();
+		throw std::invalid_argument("Length should be grater than 0");
 	}
+	arraySize = length;
+	count = 0;
+	data = new T[arraySize];
+}
 
-	public void Insert(int index, T item)
-	{
-		throw new NotImplementedException();
-	}
-
-	public void RemoveAt(int index)
-	{
-		throw new NotImplementedException();
-	}
-
-	public T this[int index]
-	{
-		get
-		{
-			throw new NotImplementedException();
-		}
-		set
-		{
-			throw new NotImplementedException();
-		}
-	}
-
-	public void Add(T item)
-	{
-		throw new NotImplementedException();
-	}
-
-	public void Clear()
-	{
-		throw new NotImplementedException();
-	}
-
-	public bool Contains(T item)
-	{
-		throw new NotImplementedException();
-	}
-
-	public void CopyTo(T[] array, int arrayIndex)
-	{
-		throw new NotImplementedException();
-	}
-
-	public int Count
-	{
-		get { throw new NotImplementedException(); }
-	}
-
-	public bool IsReadOnly
-	{
-		get { throw new NotImplementedException(); }
-	}
-
-	public bool Remove(T item)
-	{
-		throw new NotImplementedException();
-	}
-
-	public System.Collections.Generic.IEnumerator GetEnumerator()
-	{
-		throw new NotImplementedException();
-	}
-
-	System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-	{
-		throw new NotImplementedException();
-	}
-	*/
+//deconstructor
+//cleanup objects
+template <class T> ArrayList<T> :: ~ArrayList() {
+	delete[]data;
 };
+
+
+template <class T> T ArrayList<T> ::Get(int index) {
+	crashIfNeeded(index);
+	
+	return data[index];
+}
+
+template <class T> int ArrayList<T> ::IndexOf(const T &d) {
+	for (int i = 0; i < count; i++) {
+		if (data[i] == d) return i;
+	}
+	return -1;
+}
+
+template <class T> void ArrayList<T> ::Add(const T &d) {
+	if (count >= arraySize) GrowArray();
+	data[count++] = d;
+}
+
+template <class T> void ArrayList<T> ::Insert(const T &d, int index) {
+	if (count >= arraySize) GrowArray();
+	//accept index at count
+	if (!(index >= 0 && index <= count)) return;
+	//move all obj's at >= index up 1
+	for (int i = count - 1; i >= 0; i--) {
+		if (i >= index) {
+			data[i + 1] = data[i];
+		}
+	}
+	data[index] = d;
+	count++;
+}
+
+template <class T> bool ArrayList<T> ::Remove(const T &d) {
+	return RemoveAt(IndexOf(d));
+}
+
+
+template <class T> bool ArrayList<T> ::RemoveAt(int index) {
+	if (index < 0 || index >= count) {
+		return false;
+	}
+	//shift elements down
+	for (int i = index + 1; i < count - 1; i++) {
+		data[i - 1] = data[i];
+	}
+
+	//adjust size
+	count--;
+	//remove last element
+	data[count] = NULL;
+	return true;
+}
+
+template <class T> bool ArrayList<T> ::Contains(const T &d) {
+	return IndexOf(d) != -1;
+}
+
+template <class T> void ArrayList<T> ::Clear() {
+	count = 0;
+	arraySize = minimumArraySize;
+	delete[]data;
+	*data = new T[arraySize];
+}
+
+template<class T> void ArrayList<T> ::GrowArray() {
+	arraySize *= 2;
+
+	T *newData = new T[arraySize];
+	for (int i = 0; i < count; i++) {
+		newData[i] = data[i];
+	}
+	delete[]data;
+	data = newData;
+}
+
+template<class T>
+bool ArrayList<T>::crashIfNeeded(int index) {
+	if (index < 0 || index >= count) {
+		throw std::out_of_range("index is inivalid");
+	}
+}
+
+template<class T>
+std::string ArrayList<T>::toString() {
+
+	std::ostringstream streamOut;
+
+	streamOut << "(";
+
+	for (int i = 0; i < count; i++) {
+
+		streamOut << data[i];
+
+		if (i != (count - 1)) {
+
+			streamOut << ", ";
+		}
+	}
+
+	streamOut << ")\n";
+
+	std::string returnString = streamOut.str();
+
+	return returnString;
+}

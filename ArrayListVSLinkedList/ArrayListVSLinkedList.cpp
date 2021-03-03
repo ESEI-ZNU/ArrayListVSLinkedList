@@ -5,8 +5,14 @@
 
 #include "pch.h"
 #include <iostream>
+#include "ArrayListTest.h"
+
+using namespace std;
 
 int main()
 {
+	ArrayListTest tester = ArrayListTest();
+	tester.test();
+
     std::cout << "Hello World!\n";
 }
