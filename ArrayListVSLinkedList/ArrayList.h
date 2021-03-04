@@ -18,24 +18,26 @@ public:
 	// Finds a specifies element of the array list based on the index. Returns null if nothing.
 	T Get(int index);
 
+	void Set(const T& d, int index);
+
 	//Finds the index of the given element.
-	int IndexOf(const T &d);
+	int IndexOf(const T& d);
 
 	// Inserts an element at the end of the list.
-	void Add(const T &d);
+	void Add(const T& d);
 
 	// Inserts an element at a specified position in the array list.
-	void Insert(const T &d, int position);
+	void Insert(const T& d, int position);
 
 	// Deletes the element at the given index.
 	// TRUE if successful
 	bool RemoveAt(int index);
 
 	// Remove the given element
-	bool Remove(const T &d);
+	bool Remove(const T& d);
 
 	// TRUE if this array contains the given data
-	bool Contains(const T &d);
+	bool Contains(const T& d);
 
 	// Empties/clears out the array list structure.
 	void Clear();
@@ -55,7 +57,7 @@ private:
 
 	int arraySize;// Size of the array.
 	int count; // Number of elements in the array.
-	T *data = nullptr;// Pointer to the array.
+	T* data = nullptr;// Pointer to the array.
 
 	//makes space in the array by doubling the arraySize
 	void GrowArray();

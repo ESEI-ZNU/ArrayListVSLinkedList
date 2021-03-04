@@ -4,7 +4,7 @@
 #include "ArrayListTest.h"
 #include "ArrayList.cpp"
 
-using namespace std; 
+using namespace std;
 
 void ArrayListTest::test() {
 	ArrayList<int> myList = ArrayList<int>();
@@ -30,7 +30,7 @@ void ArrayListTest::test() {
 	myList.Add(92);
 	myList.Add(-17);
 
-	
+
 	cout << "Printing Added members.\n";
 	cout << "The size of the list is: " << myList.Count() << endl;
 	cout << myList.toString() << endl;
@@ -43,7 +43,7 @@ void ArrayListTest::test() {
 		<< " is: " << myList.Get(myList.Count() - 1) << endl << endl;
 
 	cout << "Removing index 22 (out of bounds)\n";
-	
+
 	try {
 		myList.Remove(22);
 	}
@@ -61,7 +61,7 @@ void ArrayListTest::test() {
 	cout << "The size of the list is: " << myList.Count() << endl;
 	cout << myList.toString() << endl;
 
-	
+
 	cout << "Removing index 5\n";
 	myList.Remove(5);
 	cout << "The size of the list is: " << myList.Count() << endl;
@@ -71,7 +71,7 @@ void ArrayListTest::test() {
 	myList.Remove(-2147);
 	cout << "The size of the list is: " << myList.Count() << endl;
 	cout << myList.toString() << endl;
-	
+
 	cout << "Removing element 14 (already removed)\n";
 	myList.Remove(14);
 	cout << "The size of the list is: " << myList.Count() << endl;
@@ -85,15 +85,19 @@ void ArrayListTest::test() {
 
 	cout << "Adding -9 to index 45 (way out of bounds!)\n";
 
-	try { 
+	try {
 		myList.Insert(-9, 45);
 	}
 	catch (...) {
 		cout << "Expected out of bounds exception\n";
 	}
-	
+
 	cout << "The list now contains:\n" << myList.toString();
 	cout << "As expected the element was not Added at the invalid index!\n\n";
+
+	cout << "Adding 542 to index 7\n";
+	myList.Set(542, 7);
+	cout << "The list now contains:\n" << myList.toString();
 
 	cout << "ArrayList Test Ending." << endl << endl;
 }

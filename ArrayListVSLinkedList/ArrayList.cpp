@@ -42,23 +42,29 @@ template <class T> ArrayList<T> :: ~ArrayList() {
 
 template <class T> T ArrayList<T> ::Get(int index) {
 	crashIfNeeded(index);
-	
+
 	return data[index];
 }
 
-template <class T> int ArrayList<T> ::IndexOf(const T &d) {
+template <class T> void ArrayList<T> ::Set(const T& d, int index) {
+	crashIfNeeded(index);
+
+	data[index] = d;
+}
+
+template <class T> int ArrayList<T> ::IndexOf(const T& d) {
 	for (int i = 0; i < count; i++) {
 		if (data[i] == d) return i;
 	}
 	return -1;
 }
 
-template <class T> void ArrayList<T> ::Add(const T &d) {
+template <class T> void ArrayList<T> ::Add(const T& d) {
 	if (count >= arraySize) GrowArray();
 	data[count++] = d;
 }
 
-template <class T> void ArrayList<T> ::Insert(const T &d, int index) {
+template <class T> void ArrayList<T> ::Insert(const T& d, int index) {
 	if (count >= arraySize) GrowArray();
 	//accept index at count
 	if (!(index >= 0 && index <= count)) return;
@@ -72,7 +78,7 @@ template <class T> void ArrayList<T> ::Insert(const T &d, int index) {
 	count++;
 }
 
-template <class T> bool ArrayList<T> ::Remove(const T &d) {
+template <class T> bool ArrayList<T> ::Remove(const T& d) {
 	return RemoveAt(IndexOf(d));
 }
 
@@ -93,7 +99,7 @@ template <class T> bool ArrayList<T> ::RemoveAt(int index) {
 	return true;
 }
 
-template <class T> bool ArrayList<T> ::Contains(const T &d) {
+template <class T> bool ArrayList<T> ::Contains(const T& d) {
 	return IndexOf(d) != -1;
 }
 
@@ -107,7 +113,7 @@ template <class T> void ArrayList<T> ::Clear() {
 template<class T> void ArrayList<T> ::GrowArray() {
 	arraySize *= 2;
 
-	T *newData = new T[arraySize];
+	T* newData = new T[arraySize];
 	for (int i = 0; i < count; i++) {
 		newData[i] = data[i];
 	}
