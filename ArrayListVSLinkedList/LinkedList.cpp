@@ -1,5 +1,7 @@
 #include <iostream>
-using namespace std;
+#include "pch.h"
+
+using namespace std;
 
 template<typename T>
 class List
@@ -87,20 +89,20 @@ T & List<T>::operator[](const int index)
 	}
 }
 
-int main()
-{
-	setlocale(LC_ALL, "Rus");
-	List<int> lst;
-	lst.push_back(5);
-	lst.push_back(10);
-	lst.push_back(22);
-
-	cout << "ƒлина списка: " << lst.GetSize() << endl;
-
-	cout << "Ёлементы списка: " << endl;
-	for (int i = 0; i < lst.GetSize(); i++)
-	{
-		cout << lst[i] << endl;
-	}
-	return 0;
-}
+//int main()
+//{
+//	setlocale(LC_ALL, "Rus");
+//	List<int> lst;
+//	lst.push_back(5);
+//	lst.push_back(10);
+//	lst.push_back(22);
+//
+//	cout << "ƒлина списка: " << lst.GetSize() << endl;
+//
+//	cout << "Ёлементы списка: " << endl;
+//	for (int i = 0; i < lst.GetSize(); i++)
+//	{
+//		cout << lst[i] << endl;
+//	}
+//	return 0;
+//}
