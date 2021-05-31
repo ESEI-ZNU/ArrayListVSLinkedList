@@ -107,7 +107,7 @@ template <class T> void ArrayList<T> ::Clear() {
 	count = 0;
 	arraySize = minimumArraySize;
 	delete[]data;
-	*data = new T[arraySize];
+	data = new T[arraySize];
 }
 
 template<class T> void ArrayList<T> ::GrowArray() {
