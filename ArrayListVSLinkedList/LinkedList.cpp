@@ -2,6 +2,7 @@
 Linked_list implementation for cracking the code
 questions
 */
+#include "pch.h"
 #include <iostream>
 #include <map>
 
@@ -110,7 +111,6 @@ void List<dataType>::Set(int index, dataType data) {
 		node->next = prev->next->next;
 		prev->next = node;
 	}
-	size++;
 }
 
 template <typename dataType>
@@ -275,19 +275,19 @@ void List<dataType>::crashIfNeeded(int index) {
 }
 
 
-int main(int argc, char** argv) {
-	List<int> list;
-	list.Add(25);
-	list.Add(45);
-	list.Print();
-	cout << "List size : " << list.getLength() << endl;
-	cout << list.Get(0) << endl;
-	cout << list.indexOf(45) << endl;
-
-	list.Print();
-	cout << "List size : " << list.getLength() << endl;
-
-	list.RemoveAll();
-
-	return 0;
-}
+//int linkedListTest(int argc, char** argv) {
+//	List<int> list;
+//	list.Add(25);
+//	list.Add(45);
+//	list.Print();
+//	cout << "List size : " << list.getLength() << endl;
+//	cout << list.Get(0) << endl;
+//	cout << list.indexOf(45) << endl;
+//
+//	list.Print();
+//	cout << "List size : " << list.getLength() << endl;
+//
+//	list.RemoveAll();
+//
+//	return 0;
+//}
