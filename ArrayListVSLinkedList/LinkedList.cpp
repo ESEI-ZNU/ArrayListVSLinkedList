@@ -20,8 +20,6 @@ private:
 public:
 	//constructer
 	List();
-	List(const List& aList); //copy constructer for deep copy
-	List(Node* head);
 
 	//destructor
 	~List();
@@ -44,6 +42,7 @@ public:
 private:
 	int size;
 	Node* head;
+	Node* tail;
 };
 
 template <typename dataType>
@@ -56,53 +55,22 @@ template <typename dataType>
 List<dataType>::List() {
 	size = 0;
 	head = NULL;
-}
-
-template <typename dataType>
-List<dataType>::List(Node* aHead) {
-	size = 0;
-	head = aHead;
-	for (Node* cur = head; cur != NULL; cur = cur->next) {
-		// cout << cur -> data << endl;
-		size++;
-	}
-}
-
-template <typename dataType>
-List<dataType>::List(const List& aList) {
-	size = aList.size;
-
-	head = new Node;
-	head->data = aList.head->data;
-	Node* cur = head;
-
-	for (Node* cp_node = aList.head->next; cp_node != NULL; cp_node = cp_node->next) {
-		cur->next = new Node;
-		cur = cur->next;
-		cur->data = cp_node->data;
-	}
-
-	cur->next = NULL;
+	tail = NULL;
 }
 
 template <typename dataType>
 void List<dataType>::Set(int index, dataType data) {
 	crashIfNeeded(index);
-	if (index < 0) {
-		cout << "Negative index!!" << endl;
-		return;
-	}
-	if (index > size) {
-		cout << "Extension is not supported!!" << endl;
-		return;
-	}
-
 	//if insert head
 	if (index == 0) {
 		Node* new_head = new Node;
 		new_head->next = head->next;
 		new_head->data = data;
 		head = new_head;
+		if (size == 1)
+		{
+			tail = head;
+		}
 	}//if insert into middle
 	else {
 		Node* prev = GetNode(index - 1);
@@ -110,26 +78,26 @@ void List<dataType>::Set(int index, dataType data) {
 		node->data = data;
 		node->next = prev->next->next;
 		prev->next = node;
+		if (size == index)
+		{
+			tail = node;
+		}
 	}
 }
 
 template <typename dataType>
 void List<dataType>::Insert(int index, dataType data) {
 	crashIfNeeded(index);
-	if (index < 0) {
-		cout << "Negative index!!" << endl;
-		return;
-	}
-	if (index > size) {
-		cout << "Extension is not supported!!" << endl;
-		return;
-	}
 	//if insert head
 	if (index == 0) {
 		Node* new_head = new Node;
 		new_head->next = head;
 		new_head->data = data;
 		head = new_head;
+		if (size == 1)
+		{
+			tail = head;
+		}
 	}//if insert into middle
 	else {
 		Node* prev = GetNode(index - 1);
@@ -137,6 +105,10 @@ void List<dataType>::Insert(int index, dataType data) {
 		node->data = data;
 		node->next = prev->next;
 		prev->next = node;
+		if (size == index)
+		{
+			tail = node;
+		}
 	}
 	size++;
 }
@@ -150,19 +122,15 @@ void List<dataType>::Add(dataType data)
 		new_head->next = head;
 		new_head->data = data;
 		head = new_head;
+		tail = new_head;
 	}
 	else
 	{
-		Node* current = this->head;
-
-		while (current->next != nullptr)
-		{
-			current = current->next;
-		}
 		Node* new_node = new Node;
 		new_node->data = data;
 		new_node->next = nullptr;
-		current->next = new_node;
+		tail->next = new_node;
+		tail = new_node;
 	}
 
 	size++;
@@ -193,25 +161,24 @@ int List<dataType>::indexOf(dataType data)
 template <typename dataType>
 void List<dataType>::RemoveAt(int index) {
 	crashIfNeeded(index);
-	if (size == 0) {
-		cout << "No item to remove in list!!" << endl;
-		return;
-	}
-	else if (index >= size || index < 0) {
-		cout << "No item with given index!!" << endl;
-		return;
-	}
-
 	Node* cur;
 	//if head ptr
 	if (index == 0) {
 		cur = head;
 		head = head->next;
+		if (size == 1)
+		{
+			tail = head;
+		}
 	}
 	else {
 		Node* prev = GetNode(index - 1);
 		cur = prev->next;
 		prev->next = cur->next;
+		if (index == size - 1)
+		{
+			tail = prev;
+		}
 	}
 	cur->next = NULL;
 	delete cur;
@@ -230,6 +197,7 @@ void List<dataType>::RemoveAll() {
 		delete temp;
 		size--;
 	}
+	tail = nullptr;
 }
 
 template <typename dataType>
@@ -273,7 +241,6 @@ void List<dataType>::crashIfNeeded(int index) {
 		throw std::out_of_range("index is inivalid");
 	}
 }
-
 
 //int linkedListTest(int argc, char** argv) {
 //	List<int> list;
