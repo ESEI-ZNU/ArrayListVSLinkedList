@@ -11,8 +11,9 @@ using namespace std;
 
 const int minimumArraySize = 2;
 
-//constructor
-//set array count, count and data
+/// <summary>constructor.
+/// <para>set array count, count and data.</para>
+/// </summary>
 template<class T>
 ArrayList<T>::ArrayList() {
 	arraySize = minimumArraySize;
@@ -20,8 +21,10 @@ ArrayList<T>::ArrayList() {
 	data = new T[arraySize];
 }
 
-//constructor with length
-//set array count, count and data
+/// <summary>constructor with length.
+/// <para>set array count, count and data.</para>
+/// <param name="length">- Array size.</param>
+/// </summary>
 template<class T>
 ArrayList<T>::ArrayList(int length) {
 	if (length < 0)
@@ -33,25 +36,41 @@ ArrayList<T>::ArrayList(int length) {
 	data = new T[arraySize];
 }
 
-//deconstructor
-//cleanup objects
+/// <summary>deconstructor.
+/// <para>cleanup objects.</para>
+/// </summary>
 template <class T> ArrayList<T> :: ~ArrayList() {
 	delete[]data;
 };
 
-
+/// <summary>
+/// Get.
+/// <para>Gets element by its index.</para>
+/// </summary>
+/// <param name="index">- Index nedded to get</param>
 template <class T> T ArrayList<T> ::Get(int index) {
 	crashIfNeeded(index);
 
 	return data[index];
 }
 
+/// <summary>
+/// Set.
+/// <para>Rewrites data by index.</para>
+/// </summary>
+/// <param name="d">- Data to rewrite</param>
+/// <param name="index">- Index to be rewritten</param>
 template <class T> void ArrayList<T> ::Set(const T& d, int index) {
 	crashIfNeeded(index);
 
 	data[index] = d;
 }
 
+/// <summary>
+/// IndexOf.
+/// <para>Searches the specific element.</para>
+/// </summary>
+/// <param name="d">- Data of the element</param>
 template <class T> int ArrayList<T> ::IndexOf(const T& d) {
 	for (int i = 0; i < count; i++) {
 		if (data[i] == d) return i;
@@ -59,11 +78,22 @@ template <class T> int ArrayList<T> ::IndexOf(const T& d) {
 	return -1;
 }
 
+/// <summary>
+/// Add.
+/// <para>Adds elements to array.</para>
+/// </summary>
+/// <param name="d">- Data to add in array</param>
 template <class T> void ArrayList<T> ::Add(const T& d) {
 	if (count >= arraySize) GrowArray();
 	data[count++] = d;
 }
 
+/// <summary>
+/// Insert.
+/// <para>Inserts data by index and push array by 1.</para>
+/// </summary>
+/// <param name="d">- Data to insert</param>
+/// <param name="index">- Index to insert</param>
 template <class T> void ArrayList<T> ::Insert(const T& d, int index) {
 	if (count >= arraySize) GrowArray();
 	//accept index at count
@@ -78,11 +108,20 @@ template <class T> void ArrayList<T> ::Insert(const T& d, int index) {
 	count++;
 }
 
+/// <summary>
+/// Remove.
+/// <para>Removes the specific element.</para>
+/// </summary>
+/// <param name="d">- Data to remove</param>
 template <class T> bool ArrayList<T> ::Remove(const T& d) {
 	return RemoveAt(IndexOf(d));
 }
 
-
+/// <summary>
+/// RemoveAt.
+/// <para>Removes element by index.</para>
+/// </summary>
+/// <param name="index">- Index to remove data</param>
 template <class T> bool ArrayList<T> ::RemoveAt(int index) {
 	if (index < 0 || index >= count) {
 		return false;
@@ -99,10 +138,19 @@ template <class T> bool ArrayList<T> ::RemoveAt(int index) {
 	return true;
 }
 
+/// <summary>
+/// Contains.
+/// <para>Ñhecks for an element in an array.</para>
+/// </summary>
+/// <param name="d">- Data to check</param>
 template <class T> bool ArrayList<T> ::Contains(const T& d) {
 	return IndexOf(d) != -1;
 }
 
+/// <summary>
+/// Clear.
+/// <para>Deletes all data from array.</para>
+/// </summary>
 template <class T> void ArrayList<T> ::Clear() {
 	count = 0;
 	arraySize = minimumArraySize;
@@ -110,6 +158,10 @@ template <class T> void ArrayList<T> ::Clear() {
 	data = new T[arraySize];
 }
 
+/// <summary>
+/// GrowArray.
+/// <para>Creates a new dynamic array twice the size of the first array.</para>
+/// </summary>
 template<class T> void ArrayList<T> ::GrowArray() {
 	arraySize *= 2;
 
@@ -121,6 +173,11 @@ template<class T> void ArrayList<T> ::GrowArray() {
 	data = newData;
 }
 
+/// <summary>
+/// crashIfNeeded.
+/// <para>Crashes the program.</para>
+/// </summary>
+/// <param name="index">- Index to crash</param>
 template<class T>
 bool ArrayList<T>::crashIfNeeded(int index) {
 	if (index < 0 || index >= count) {
@@ -128,6 +185,10 @@ bool ArrayList<T>::crashIfNeeded(int index) {
 	}
 }
 
+/// <summary>
+/// toString.
+/// <para>Transforms to string.</para>
+/// </summary>
 template<class T>
 std::string ArrayList<T>::toString() {
 
