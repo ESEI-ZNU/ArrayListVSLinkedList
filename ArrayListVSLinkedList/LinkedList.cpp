@@ -18,7 +18,7 @@ private:
 	};
 
 public:
-	//constructer
+	//constructor
 	List();
 
 	//destructor
@@ -45,12 +45,18 @@ private:
 	Node* tail;
 };
 
+/// <summary>deconstructor.
+/// <para>cleanup objects.</para>
+/// </summary>
 template <typename dataType>
 List<dataType>::~List() {
 	while (!isEmpty())
 		RemoveAt(0);
 }
 
+/// <summary>constructor.
+/// <para>set array count, count and data.</para>
+/// </summary>
 template <typename dataType>
 List<dataType>::List() {
 	size = 0;
@@ -58,6 +64,12 @@ List<dataType>::List() {
 	tail = NULL;
 }
 
+/// <summary>
+/// Set.
+/// <para>Rewrites data by index.</para>
+/// </summary>
+/// <param name="index">- Index to be rewritten</param>
+/// <param name="data">- Data to rewrite</param>
 template <typename dataType>
 void List<dataType>::Set(int index, dataType data) {
 	crashIfNeeded(index);
@@ -85,6 +97,12 @@ void List<dataType>::Set(int index, dataType data) {
 	}
 }
 
+/// <summary>
+/// Insert.
+/// <para>Inserts data by index and push array by 1.</para>
+/// </summary>
+/// <param name="index">- Index to insert</param>
+/// <param name="data">- Data to insert</param>
 template <typename dataType>
 void List<dataType>::Insert(int index, dataType data) {
 	crashIfNeeded(index);
@@ -113,6 +131,11 @@ void List<dataType>::Insert(int index, dataType data) {
 	size++;
 }
 
+/// <summary>
+/// Add.
+/// <para>Adds elements to array.</para>
+/// </summary>
+/// <param name="data">- Data to add in array</param>
 template<typename dataType>
 void List<dataType>::Add(dataType data)
 {
@@ -136,6 +159,11 @@ void List<dataType>::Add(dataType data)
 	size++;
 }
 
+/// <summary>
+/// indexOf.
+/// <para>Searches the specific element.</para>
+/// </summary>
+/// <param name="data">- Data of the element</param>
 template<typename dataType>
 int List<dataType>::indexOf(dataType data)
 {
@@ -158,6 +186,11 @@ int List<dataType>::indexOf(dataType data)
 	}
 }
 
+/// <summary>
+/// RemoveAt.
+/// <para>Removes element by index.</para>
+/// </summary>
+/// <param name="index">- Index to remove data</param>
 template <typename dataType>
 void List<dataType>::RemoveAt(int index) {
 	crashIfNeeded(index);
@@ -186,6 +219,10 @@ void List<dataType>::RemoveAt(int index) {
 	size--;
 }
 
+/// <summary>
+/// RemoveAll.
+/// <para>Deletes all data from array.</para>
+/// </summary>
 template <typename dataType>
 void List<dataType>::RemoveAll() {
 	while (head != nullptr)
@@ -200,6 +237,11 @@ void List<dataType>::RemoveAll() {
 	tail = nullptr;
 }
 
+/// <summary>
+/// Get.
+/// <para>Gets element by its index.</para>
+/// </summary>
+/// <param name="index">- Index nedded to get</param>
 template <typename dataType>
 dataType List<dataType>::Get(int index) {
 	crashIfNeeded(index);
@@ -207,6 +249,11 @@ dataType List<dataType>::Get(int index) {
 	return cur->data;
 }
 
+/// <summary>
+/// GetNode.
+/// <para>Returns node by index.</para>
+/// </summary>
+/// <param name="index">- node index</param>
 template <typename dataType>
 typename List<dataType>::Node* List<dataType>::GetNode(int index) {
 	crashIfNeeded(index);
@@ -217,6 +264,10 @@ typename List<dataType>::Node* List<dataType>::GetNode(int index) {
 	return cur;
 }
 
+/// <summary>
+/// Print.
+/// <para>Prints the list.</para>
+/// </summary>
 template <typename dataType>
 void List<dataType>::Print() {
 	for (Node* cur = head; cur != NULL; cur = cur->next) {
@@ -225,36 +276,32 @@ void List<dataType>::Print() {
 	cout << endl;
 }
 
+/// <summary>
+/// isEmpty.
+/// <para>Checks if list is empty.</para>
+/// </summary>
 template <typename dataType>
 bool List<dataType>::isEmpty() {
 	return (size == 0) ? true : false;
 }
 
+/// <summary>
+/// getLength.
+/// <para>Shows list's size.</para>
+/// </summary>
 template <typename dataType>
 int List<dataType>::getLength() {
 	return size;
 }
 
+/// <summary>
+/// crashIfNeeded.
+/// <para>Crashes the program.</para>
+/// </summary>
+/// <param name="index">- Index to crash</param>
 template<typename dataType>
 void List<dataType>::crashIfNeeded(int index) {
 	if (index < 0 || index >= size) {
 		throw std::out_of_range("index is inivalid");
 	}
 }
-
-//int linkedListTest(int argc, char** argv) {
-//	List<int> list;
-//	list.Add(25);
-//	list.Add(45);
-//	list.Print();
-//	cout << "List size : " << list.getLength() << endl;
-//	cout << list.Get(0) << endl;
-//	cout << list.indexOf(45) << endl;
-//
-//	list.Print();
-//	cout << "List size : " << list.getLength() << endl;
-//
-//	list.RemoveAll();
-//
-//	return 0;
-//}
